@@ -117,12 +117,9 @@ class EleventyFiles {
       ignores = ignoreContent
         .split("\n")
         .map(line => {
-          return line.trim();
+          return line.replace(/#.*$/g, "").trim();
         })
-        .filter(line => {
-          // empty lines or comments get filtered out
-          return line.length > 0 && line.charAt(0) !== "#";
-        })
+        .filter(line => !!line)
         .map(line => {
           let path = TemplateGlob.normalizePath(dir, "/", line);
           debug(`${ignoreFile} ignoring: ${path}`);
